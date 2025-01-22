@@ -1,0 +1,20 @@
+{
+  "name": "event-tracker",
+  "version": "1.0.0",
+  "description": "A custom event tracker as a standalone project that can be integrated into multiple applications",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "example": "examples",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "."
+  },
+  "author": "Indresh",
+  "license": "ISC"
+}
