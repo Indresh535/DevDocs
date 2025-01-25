@@ -1,0 +1,107 @@
+Sure! Let’s dive into a more advanced Python example that involves multiple threads running concurrently and sharing data, while also ensuring thread safety using the threading module.
+
+We will implement a Producer-Consumer problem with multiple producers and consumers, where:
+
+Producers generate items (e.g., data or tasks).
+Consumers process the items.
+A shared queue is used to safely exchange items between threads.
+The program will involve:
+
+Multiple producer threads generating random data.
+Multiple consumer threads consuming and processing the data.
+Thread synchronization using queue.Queue and threading.Lock.
+Here’s an advanced example:
+
+python
+Copy
+import threading
+import queue
+import random
+import time
+
+# Shared queue to hold produced data
+data_queue = queue.Queue(maxsize=10)
+
+# Lock for synchronizing thread access to shared resources
+lock = threading.Lock()
+
+# Producer function that generates random numbers
+def producer(producer_id):
+    while True:
+        item = random.randint(1, 100)  # Generate a random item (task)
+        time.sleep(random.uniform(0.1, 1))  # Simulate work (e.g., network or I/O)
+        data_queue.put(item)  # Put the item into the shared queue
+        print(f"Producer-{producer_id} produced: {item}")
+
+# Consumer function that processes the data
+def consumer(consumer_id):
+    while True:
+        # Get item from the queue (will block until an item is available)
+        item = data_queue.get()
+        time.sleep(random.uniform(0.5, 2))  # Simulate work (e.g., processing time)
+        print(f"Consumer-{consumer_id} consumed: {item}")
+        data_queue.task_done()  # Mark the task as done
+
+# Function to start the producer-consumer system
+def start_producer_consumer_system(num_producers, num_consumers):
+    producer_threads = []
+    consumer_threads = []
+
+    # Start producer threads
+    for i in range(num_producers):
+        producer_thread = threading.Thread(target=producer, args=(i+1,))
+        producer_threads.append(producer_thread)
+        producer_thread.daemon = True  # Allow thread to exit when the program ends
+        producer_thread.start()
+
+    # Start consumer threads
+    for i in range(num_consumers):
+        consumer_thread = threading.Thread(target=consumer, args=(i+1,))
+        consumer_threads.append(consumer_thread)
+        consumer_thread.daemon = True  # Allow thread to exit when the program ends
+        consumer_thread.start()
+
+    # Wait for threads to finish (This will never return because of daemon threads)
+    for t in producer_threads + consumer_threads:
+        t.join()
+
+# Main driver function
+if __name__ == "__main__":
+    # Number of producers and consumers
+    num_producers = 3
+    num_consumers = 4
+
+    print("Starting Producer-Consumer system...")
+    start_producer_consumer_system(num_producers, num_consumers)
+Key Features of this Example:
+Multiple Producers: The producer() function generates random data and puts it into the shared queue (data_queue). Multiple producers can run concurrently, generating data.
+Multiple Consumers: The consumer() function retrieves items from the shared queue and processes them. Multiple consumers can run concurrently, consuming and processing data.
+Thread Safety:
+We use queue.Queue to safely exchange data between threads. The Queue handles thread synchronization, ensuring that only one thread accesses an item at a time.
+The task_done() method tells the queue that a task has been processed.
+Daemon Threads: Threads are set to be daemon threads, meaning they will automatically exit when the main program ends (so we don’t need to explicitly wait for them).
+Blocking on Empty Queue: The consumer thread blocks on data_queue.get() if the queue is empty, ensuring that consumers only consume when there's something to consume.
+Running this program:
+When you run this program, you'll see the producer threads generating random numbers and the consumer threads consuming them. The threads will run concurrently, meaning some producers will produce while consumers consume.
+
+Example Output:
+yaml
+Copy
+Starting Producer-Consumer system...
+Producer-1 produced: 87
+Consumer-1 consumed: 87
+Producer-2 produced: 22
+Producer-1 produced: 35
+Consumer-2 consumed: 22
+Consumer-3 consumed: 35
+Producer-3 produced: 63
+Producer-1 produced: 18
+Consumer-4 consumed: 63
+...
+Things to note:
+Thread Synchronization: Using queue.Queue provides built-in synchronization between threads without manually handling locks.
+Thread Pool: You can increase or decrease the number of producer and consumer threads as per your needs.
+Daemon Threads: Since we set threads as daemons, the program will exit once all the main functions are complete, even if the threads are still running.
+This example demonstrates a real-world scenario where multiple threads run concurrently, sharing data safely, and is often used in systems that require a producer-consumer model (like job processing, network servers, etc.).
+
+Let me know if you want further explanations or adjustments to this example!
