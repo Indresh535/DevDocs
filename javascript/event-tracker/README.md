@@ -167,3 +167,171 @@ Real-Time Control: Users can manually log events via the UI.
 Extensibility: The tracker can be enhanced to include more features like heatmaps or session tracking.
 Cross-Platform: Works with any web application that can include the JavaScript file.
 Would you like to further customize the event tracker or integrate advanced features like WebSocket logging or analytics dashboards?
+
+
+
+
+To build a custom event tracking system similar to Mixpanel and Google Tag Manager, follow these steps:
+
+1. System Architecture
+Frontend Tracker: A JavaScript SDK to capture and send events.
+Backend API: A Node.js service to process and store event data.
+Database: ClickHouse for fast, scalable event storage.
+Asynchronous Logging: To minimize performance impact.
+2. ClickHouse Database Setup
+Create a ClickHouse table to store event data.
+
+sql
+Copy
+Edit
+CREATE TABLE event_manager (
+    event_id UUID DEFAULT generateUUIDv4(),
+    event_type String,
+    event_name String,
+    event_value String,
+    event_starttime DateTime DEFAULT now(),
+    event_endtime DateTime DEFAULT now(),
+    event_createdtime DateTime DEFAULT now(),
+    event_lat Float64,
+    event_lang Float64,
+    user_browser String,
+    user_os String,
+    user_ip String
+) ENGINE = MergeTree()
+ORDER BY event_createdtime;
+3. Node.js Backend for Event Processing
+Install Dependencies
+bash
+Copy
+Edit
+npm init -y
+npm install express clickhouse uuid cors body-parser
+Backend Code
+Create a server.js file.
+
+javascript
+Copy
+Edit
+const express = require("express");
+const { ClickHouse } = require("clickhouse");
+const { v4: uuidv4 } = require("uuid");
+const cors = require("cors");
+const bodyParser = require("body-parser");
+
+const app = express();
+const port = 3000;
+
+// ClickHouse connection
+const clickhouse = new ClickHouse({
+    url: "http://localhost",
+    port: 8123,
+    debug: false,
+    basicAuth: null,
+    isUseGzip: false,
+    format: "json",
+});
+
+app.use(cors());
+app.use(bodyParser.json());
+
+// Log event API
+app.post("/api/events/log", async (req, res) => {
+    const {
+        event_type,
+        event_name,
+        event_value,
+        event_lat,
+        event_lang,
+        user_browser,
+        user_os,
+        user_ip,
+    } = req.body;
+
+    try {
+        await clickhouse.insert(
+            "INSERT INTO event_manager FORMAT JSONEachRow",
+            [
+                {
+                    event_id: uuidv4(),
+                    event_type,
+                    event_name,
+                    event_value,
+                    event_starttime: new Date().toISOString(),
+                    event_endtime: new Date().toISOString(),
+                    event_createdtime: new Date().toISOString(),
+                    event_lat: event_lat || 0,
+                    event_lang: event_lang || 0,
+                    user_browser,
+                    user_os,
+                    user_ip,
+                },
+            ]
+        );
+
+        res.json({ status: "success", message: "Event logged successfully" });
+    } catch (error) {
+        console.error("Error logging event:", error);
+        res.status(500).json({ status: "error", message: "Failed to log event" });
+    }
+});
+
+app.listen(port, () => {
+    console.log(`Event tracker running at http://localhost:${port}`);
+});
+4. JavaScript SDK for Tracking Events
+tracker.js
+javascript
+Copy
+Edit
+(function () {
+    const TRACKING_URL = "http://localhost:3000/api/events/log";
+
+    const getUserInfo = () => {
+        return {
+            user_browser: navigator.userAgent,
+            user_os: navigator.platform,
+            user_ip: null, // Can be fetched from the backend if needed
+        };
+    };
+
+    const trackEvent = async (eventType, eventName, eventValue = "") => {
+        const userInfo = getUserInfo();
+        const payload = {
+            event_type: eventType,
+            event_name: eventName,
+            event_value: eventValue,
+            event_lat: 0, // Optional
+            event_lang: 0, // Optional
+            ...userInfo,
+        };
+
+        try {
+            navigator.sendBeacon(TRACKING_URL, JSON.stringify(payload));
+        } catch (err) {
+            console.error("Error sending event:", err);
+        }
+    };
+
+    window.EventTracker = { trackEvent };
+})();
+5. Integrate in Any Web Application
+Simply add the script to your website:
+
+html
+Copy
+Edit
+<script src="tracker.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        EventTracker.trackEvent("page_view", "Home Page Loaded");
+    });
+
+    document.getElementById("submit-btn").addEventListener("click", function () {
+        EventTracker.trackEvent("click", "Submit Button Clicked");
+    });
+</script>
+6. Deploying the Event Tracker
+Frontend SDK: Host the tracker.js on a CDN or public folder.
+Backend API: Deploy using Docker, PM2, or Kubernetes.
+Database: ClickHouse instance on a cloud server.
+Would you like help deploying this to a live server? 🚀
