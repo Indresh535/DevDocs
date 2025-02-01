@@ -1,4 +1,5 @@
 https://www.databasestar.com/vip/
+SQL Views and Materialized Views: The Complete Guide - https://www.databasestar.com/sql-views/
 # SQL Learning Roadmap
 
 ## **1. Basics of SQL**
