@@ -5,6 +5,12 @@
 
 const Queue = require('bull');
 const fibonacciQueue = new Queue('fibonacci');
+const { BullAdapter } = require('bull-board');
+const { router } = require('bull-board');
+
+const app = express();
+
+
 
 function fibonacci(n) {
     if (n <= 1) return n;
