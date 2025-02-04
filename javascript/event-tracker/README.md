@@ -335,3 +335,94 @@ Frontend SDK: Host the tracker.js on a CDN or public folder.
 Backend API: Deploy using Docker, PM2, or Kubernetes.
 Database: ClickHouse instance on a cloud server.
 Would you like help deploying this to a live server? 🚀
+
+
+
+To set up Redis on Windows, you'll need to follow a few steps, as Redis is primarily designed to run on Linux or macOS. However, there are a couple of ways to run Redis on Windows.
+
+Option 1: Using Redis on Windows via WSL (Windows Subsystem for Linux)
+The Windows Subsystem for Linux (WSL) allows you to run a Linux distribution directly on Windows. This is the most reliable way to run Redis on Windows.
+
+Here are the steps to set up Redis using WSL:
+
+Step 1: Install WSL and a Linux Distribution
+Enable WSL:
+
+Open PowerShell as Administrator and run:
+bash
+Copy
+wsl --install
+Install a Linux distribution (Ubuntu is the most popular choice):
+
+Open Microsoft Store, search for Ubuntu and click Install.
+Set up your Linux distribution:
+
+Once the installation is complete, launch Ubuntu (or your preferred distro) from the Start menu.
+You’ll be prompted to create a user and password for the Linux system.
+Step 2: Install Redis in WSL
+Update package lists in your Linux environment:
+
+bash
+Copy
+sudo apt update
+Install Redis:
+
+bash
+Copy
+sudo apt install redis-server
+Start the Redis server:
+
+You can start Redis by running:
+bash
+Copy
+sudo service redis-server start
+Verify Redis is running:
+
+You can test Redis by using the redis-cli tool:
+bash
+Copy
+redis-cli
+Inside the Redis CLI, type ping to check if Redis is responding:
+bash
+Copy
+PONG
+Step 3: Access Redis from Windows
+You can access the Redis server running in WSL from your Windows machine.
+
+Find the IP address of WSL:
+
+Inside the WSL terminal, run:
+bash
+Copy
+hostname -I
+Access Redis from Windows:
+
+Use the IP address from the above command, or you can simply use localhost if it's working in your local setup.
+Option 2: Using Redis via Docker
+Another method to run Redis on Windows is to use Docker. Docker provides a way to run Redis in a container without having to worry about setting it up natively on Windows.
+
+Step 1: Install Docker for Windows
+Download Docker Desktop for Windows from the official Docker website: Docker Desktop
+Install Docker by running the installer and following the instructions.
+Once installed, make sure Docker Desktop is running.
+Step 2: Run Redis in Docker
+Open a PowerShell or Command Prompt window.
+
+Run the following Docker command to start a Redis container:
+
+bash
+Copy
+docker run --name redis-container -p 6379:6379 -d redis
+This command will download the official Redis image and run Redis inside a container.
+The -p 6379:6379 part makes Redis available on port 6379 on your Windows machine.
+The -d flag runs the container in detached mode.
+Step 3: Verify Redis is Running
+Check running containers:
+
+bash
+Copy
+docker ps
+Access Redis from Windows:
+
+Use localhost:6379 to connect to Redis on your Windows machine.
+You can use Redis clients like redis-cli, Bull, or Redis GUI tools like RedisInsight to manage Redis.
