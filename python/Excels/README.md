@@ -86,3 +86,162 @@ Go to Data > Text to Columns and select the delimiter.
 Sparklines provide mini charts within cells to show trends in data.
 Go to Insert > Sparklines for line, column, or win/loss sparklines.
 By mastering these tips and tricks, you’ll be able to perform faster, more efficient data analysis in Excel and make more informed business decisions.
+
+
+
+
+
+# Excel Formulas for Data Analytics
+
+## **Introduction**
+Microsoft Excel is a powerful tool for data analytics, offering a variety of formulas that help in data cleaning, transformation, and analysis. This document provides a comprehensive list of essential Excel formulas, their descriptions, and use cases for data analytics.
+
+---
+
+## **1. Basic Excel Formulas**
+
+### **1.1 SUM()**
+- **Description**: Adds up a range of numbers.
+- **Syntax**: `=SUM(A1:A10)`
+- **Use Case**: Used to calculate total sales, expenses, or any numeric aggregation.
+
+### **1.2 AVERAGE()**
+- **Description**: Calculates the average of a range of numbers.
+- **Syntax**: `=AVERAGE(A1:A10)`
+- **Use Case**: Finding the mean of sales, customer ratings, or employee salaries.
+
+### **1.3 COUNT()**
+- **Description**: Counts the number of numeric values in a range.
+- **Syntax**: `=COUNT(A1:A10)`
+- **Use Case**: Counting the number of filled cells in a dataset.
+
+### **1.4 COUNTA()**
+- **Description**: Counts all non-empty cells.
+- **Syntax**: `=COUNTA(A1:A10)`
+- **Use Case**: Counting both numbers and text values in a dataset.
+
+### **1.5 COUNTIF()**
+- **Description**: Counts the number of cells that meet a specific condition.
+- **Syntax**: `=COUNTIF(A1:A10, ">50")`
+- **Use Case**: Counting sales transactions greater than $50.
+
+---
+
+## **2. Logical Formulas**
+
+### **2.1 IF()**
+- **Description**: Returns a value based on a condition.
+- **Syntax**: `=IF(A1>50, "High", "Low")`
+- **Use Case**: Categorizing sales as "High" or "Low".
+
+### **2.2 AND()**
+- **Description**: Checks if multiple conditions are TRUE.
+- **Syntax**: `=AND(A1>50, B1<100)`
+- **Use Case**: Checking if a sale is between $50 and $100.
+
+### **2.3 OR()**
+- **Description**: Checks if at least one condition is TRUE.
+- **Syntax**: `=OR(A1>50, B1<100)`
+- **Use Case**: Checking if a sale exceeds $50 or falls below $100.
+
+### **2.4 IFERROR()**
+- **Description**: Returns a custom value if an error occurs.
+- **Syntax**: `=IFERROR(A1/B1, "Error")`
+- **Use Case**: Handling division by zero errors.
+
+---
+
+## **3. Text Functions**
+
+### **3.1 CONCATENATE() / CONCAT()**
+- **Description**: Joins multiple text strings into one.
+- **Syntax**: `=CONCAT(A1, B1, C1)`
+- **Use Case**: Combining first and last names.
+
+### **3.2 LEFT()**
+- **Description**: Extracts characters from the start of a string.
+- **Syntax**: `=LEFT(A1, 5)`
+- **Use Case**: Extracting country codes from phone numbers.
+
+### **3.3 RIGHT()**
+- **Description**: Extracts characters from the end of a string.
+- **Syntax**: `=RIGHT(A1, 3)`
+- **Use Case**: Extracting file extensions from filenames.
+
+### **3.4 MID()**
+- **Description**: Extracts characters from the middle of a string.
+- **Syntax**: `=MID(A1, 3, 5)`
+- **Use Case**: Extracting specific portions of text.
+
+### **3.5 LEN()**
+- **Description**: Counts the number of characters in a string.
+- **Syntax**: `=LEN(A1)`
+- **Use Case**: Checking if a password meets length requirements.
+
+### **3.6 TRIM()**
+- **Description**: Removes extra spaces from text.
+- **Syntax**: `=TRIM(A1)`
+- **Use Case**: Cleaning up data entry mistakes.
+
+### **3.7 SUBSTITUTE()**
+- **Description**: Replaces occurrences of a specific text.
+- **Syntax**: `=SUBSTITUTE(A1, "old", "new")`
+- **Use Case**: Replacing outdated product names.
+
+---
+
+## **4. Date and Time Functions**
+
+### **4.1 TODAY()**
+- **Description**: Returns the current date.
+- **Syntax**: `=TODAY()`
+- **Use Case**: Tracking daily transactions.
+
+### **4.2 NOW()**
+- **Description**: Returns the current date and time.
+- **Syntax**: `=NOW()`
+- **Use Case**: Timestamping order records.
+
+### **4.3 DATEDIF()**
+- **Description**: Calculates the difference between two dates.
+- **Syntax**: `=DATEDIF(A1, B1, "D")`
+- **Use Case**: Finding the number of days between two dates.
+
+### **4.4 EOMONTH()**
+- **Description**: Returns the last day of the month for a given date.
+- **Syntax**: `=EOMONTH(A1, 0)`
+- **Use Case**: Determining month-end financials.
+
+---
+
+## **5. Lookup and Reference Functions**
+
+### **5.1 VLOOKUP()**
+- **Description**: Searches for a value in a table and returns a corresponding value.
+- **Syntax**: `=VLOOKUP(1001, A2:C10, 2, FALSE)`
+- **Use Case**: Looking up customer names by ID.
+
+### **5.2 HLOOKUP()**
+- **Description**: Searches for a value in a horizontal table.
+- **Syntax**: `=HLOOKUP(1001, A1:J2, 2, FALSE)`
+- **Use Case**: Looking up data in transposed tables.
+
+### **5.3 INDEX()**
+- **Description**: Returns the value of a specific cell in a range.
+- **Syntax**: `=INDEX(A2:C10, 3, 2)`
+- **Use Case**: Finding an exact row and column match.
+
+### **5.4 MATCH()**
+- **Description**: Returns the position of a value in a range.
+- **Syntax**: `=MATCH(50, A1:A10, 0)`
+- **Use Case**: Finding an item’s position in a list.
+
+### **5.5 XLOOKUP()** (Newer Excel Versions)
+- **Description**: An advanced lookup function replacing VLOOKUP and HLOOKUP.
+- **Syntax**: `=XLOOKUP(1001, A2:A10, B2:B10)`
+- **Use Case**: More flexible data lookups.
+
+---
+
+## **Conclusion**
+This document provides an overview of essential Excel formulas used in data analytics. Mastering these functions can help you efficiently clean, analyze, and visualize data for better decision-making. 🚀
