@@ -78,7 +78,9 @@ https://github.com/Chando0185/stock_price_prediction
 
 News_Article_Classification_Synopsis
 Face_Detection_Synopsis
+
 Handwritten_Digit_Recognition_Synopsis
+https://github.com/Vinay10100/Handwritten-Digit-Recognition
 
 
 
