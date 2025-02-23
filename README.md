@@ -76,11 +76,14 @@ Stock_Price_Prediction_Synopsis
 https://www.youtube.com/watch?v=7dnBxHbVMV8
 https://github.com/Chando0185/stock_price_prediction
 
+
 News_Article_Classification_Synopsis
 https://github.com/ervishuu/News-Article-Classification
 
+
 Face_Detection_Synopsis
 https://github.com/justadudewhohacks/face-api.js
+
 
 Handwritten_Digit_Recognition_Synopsis
 https://github.com/Vinay10100/Handwritten-Digit-Recognition
