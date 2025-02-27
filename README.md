@@ -70,7 +70,7 @@ Process user queries and send them to the OpenAI API.
 Retrieve relevant data from your database based on the question.
 Post-process the OpenAI response.
 Combine database data with the language model’s output.
-Remember, the language model won’t directly access your database; it generates responses based on its training on a vast dataset. Ensure user input security and privacy measures are in place. Training the model specifically on your database data requires significant resources and expertise in NLP and ML, so using pre-trained models like GPT-3 for language generation is recommended.
+Remember, the language won’t directly access your database; it generates responses based on its training on a vast dataset. Ensure user input security and privacy measures are in place. Training the model specifically on your database data requires significant resources and expertise in NLP and ML, so using pre-trained models like GPT-3 for language generation is recommended.
 
 Stock_Price_Prediction_Synopsis
 https://www.youtube.com/watch?v=7dnBxHbVMV8
