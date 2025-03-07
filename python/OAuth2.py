@@ -54,6 +54,11 @@ authorization = AuthorizationServer(app, query_client=OAuth2Client.query)
 authorization.register_grant(AuthorizationCodeGrant)
 authorization.init_app(app)
 
+Best Practices for Secure Decryption
+✅ Never store the encryption key in the client’s code.
+✅ Retrieve the key dynamically from a secure key store (e.g., AWS KMS, HashiCorp Vault, Azure Key Vault).
+✅ Use HTTPS/TLS 1.2+ to encrypt all communications.
+✅ Log access attempts but never log decrypted credit card data.
 
 🚀 Secure Flow for Decryption
 1️⃣ Client authenticates via OAuth 2.0 and gets an access token.
