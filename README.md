@@ -76,16 +76,16 @@ python -m venv venv
 venv/Scripts/activate
 Stock_Price_Prediction_Synopsis
 https://www.youtube.com/watch?v=7dnBxHbVMV8
-https://github.com/Chando0185/stock_price_prediction :: Complete
+https://github.com/Chando0185/stock_price_prediction :: Complete => 
 
 News_Article_Classification_Synopsis
-https://github.com/ervishuu/News-Article-Classification :: Complete
+https://github.com/ervishuu/News-Article-Classification :: Complete => error fix
 
 Face_Detection_Synopsis
-https://github.com/justadudewhohacks/face-api.js :: Complete
+https://github.com/justadudewhohacks/face-api.js :: Complete => study
 
 Handwritten_Digit_Recognition_Synopsis
-https://github.com/Vinay10100/Handwritten-Digit-Recognition :: Completed
+https://github.com/Vinay10100/Handwritten-Digit-Recognition :: Completed => UI Change
 streamlit run app.py
 
 
