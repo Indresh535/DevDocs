@@ -76,10 +76,10 @@ python -m venv venv
 venv/Scripts/activate
 Stock_Price_Prediction_Synopsis
 https://www.youtube.com/watch?v=7dnBxHbVMV8
-https://github.com/Chando0185/stock_price_prediction :: Complete => 
+https://github.com/Chando0185/stock_price_prediction :: Complete =>  UI Change
 
 News_Article_Classification_Synopsis
-https://github.com/ervishuu/News-Article-Classification :: Complete => error fix
+https://github.com/ervishuu/News-Article-Classification :: Complete =>  UI Change
 
 Face_Detection_Synopsis
 https://github.com/justadudewhohacks/face-api.js :: Complete => study
