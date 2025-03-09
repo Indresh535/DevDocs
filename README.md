@@ -88,4 +88,8 @@ Handwritten_Digit_Recognition_Synopsis
 https://github.com/Vinay10100/Handwritten-Digit-Recognition :: Completed => UI Change
 streamlit run app.py
 
+Non-hasher-passweod: https://github
+
+
+
 
