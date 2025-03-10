@@ -89,7 +89,7 @@ https://github.com/Vinay10100/Handwritten-Digit-Recognition :: Completed => UI C
 streamlit run app.py
 
 Non-hasher-passweod: https://github :: Search
-
+try catch block
 
 
 
