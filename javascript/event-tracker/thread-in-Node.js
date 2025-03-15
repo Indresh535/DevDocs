@@ -20,7 +20,7 @@ function readFileNonBlocking() {
 // Simulate a blocking operation (e.g., a long computation)
 function blockingOperation() {
   let sum = 0;
-  console.log('Starting blocking on...');
+  console.log('Starting blocking operation...');
   for (let i = 0; i < 1e9; i++) {
     sum += i;
   }
