@@ -1,5 +1,5 @@
 # JavaScript Learning Roadmap
-
+https://github.com/leonardomso/33-js-concepts?tab=readme-ov-file#2-primitive-types
 ## **1. Introduction to JavaScript**
 
 ### **What is JavaScript?**
