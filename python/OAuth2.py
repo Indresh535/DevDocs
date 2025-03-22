@@ -54,28 +54,28 @@ authorization = AuthorizationServer(app, query_client=OAuth2Client.query)
 authorization.register_grant(AuthorizationCodeGrant)
 authorization.init_app(app)
 
-Best Practices for Secure Decryption
-✅ Never store the encryption key in the client’s code.
-✅ Retrieve the key dynamically from a secure key store (e.g., AWS KMS, HashiCorp Vault, Azure Key Vault).
-✅ Use HTTPS/TLS 1.2+ to encrypt all communications.
-✅ Log access attempts but never log decrypted credit card data.
+# Best Practices for Secure Decryption
+# ✅ Never store the encryption key in the client’s code.
+# ✅ Retrieve the key dynamically from a secure key store (e.g., AWS KMS, HashiCorp Vault, Azure Key Vault).
+# ✅ Use HTTPS/TLS 1.2+ to encrypt all communications.
+# ✅ Log access attempts but never log decrypted credit card data.
 
-🚀 Secure Flow for Decryption
-1️⃣ Client authenticates via OAuth 2.0 and gets an access token.
-2️⃣ Client requests encrypted credit card data from the API.
-3️⃣ Client requests a decryption key securely from the API.
-4️⃣ Client decrypts the data in memory (never store it permanently).
-
-
- Client authenticates via OAuth 2.0 and gets an access token.
-2️⃣ Client requests encrypted credit card data from the API.
-3️⃣ Client requests a decryption key securely from the API.
-4️⃣ Client decrypts the data in memory (never store it permanently).
+# 🚀 Secure Flow for Decryption
+# 1️⃣ Client authenticates via OAuth 2.0 and gets an access token.
+# 2️⃣ Client requests encrypted credit card data from the API.
+# 3️⃣ Client requests a decryption key securely from the API.
+# 4️⃣ Client decrypts the data in memory (never store it permanently).
 
 
-🔹 Best Practices for Secure Decryption
-✔️ Never store the encryption key in your client-side code.
-✔️ Always request the key securely from a Key Management System (KMS).
-✔️ Use HTTPS/TLS 1.2+ to protect data in transit.
-✔️ Restrict access to decryption keys using Role-Based Access Control (RBAC).
-✔️ Use tokenization instead of storing raw credit card numbers.
+#  Client authenticates via OAuth 2.0 and gets an access token.
+# 2️⃣ Client requests encrypted credit card data from the API.
+# 3️⃣ Client requests a decryption key securely from the API.
+# 4️⃣ Client decrypts the data in memory (never store it permanently).
+
+
+# 🔹 Best Practices for Secure Decryption
+# ✔️ Never store the encryption key in your client-side code.
+# ✔️ Always request the key securely from a Key Management System (KMS).
+# ✔️ Use HTTPS/TLS 1.2+ to protect data in transit.
+# ✔️ Restrict access to decryption keys using Role-Based Access Control (RBAC).
+# ✔️ Use tokenization instead of storing raw credit card numbers.
