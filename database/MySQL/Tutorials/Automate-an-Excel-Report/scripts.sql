@@ -13,4 +13,4 @@ WITH
   ROWTERMINATOR = '0x0a'
 );
 
-select * from dbo.cust_orders
+SELECT * FROM dbo.cust_orders
