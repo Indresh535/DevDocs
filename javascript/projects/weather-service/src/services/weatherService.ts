@@ -1,30 +1,22 @@
 // # Fetch weather data and insert into DB
-
-import "dotenv/config";
 import axios from "axios";
+import { connectDB } from "../config/db";
 import sql from "mssql";
 
-// SQL Server Configuration
-const dbConfig = {
-  user: process.env.DB_USER as string,
-  password: process.env.DB_PASSWORD as string,
-  server: process.env.DB_SERVER as string,
-  database: process.env.DB_DATABASE as string,
-  options: {
-    encrypt: false,
-    trustServerCertificate: true,
-  },
-};
+interface WeatherData {
+  location: string;
+  country: string;
+  temperature: number;
+  humidity: number;
+  condition: string;
+  wind_speed: number;
+  timestamp: Date;
+}
 
-// Function to Fetch Weather Data
-const fetchWeatherData = async (location: string) => {
+const fetchWeatherData = async (location: string): Promise<WeatherData | null> => {
   try {
     const response = await axios.get(process.env.API_URL as string, {
-      params: {
-        key: process.env.API_KEY as string,
-        q: location,
-        aqi: "no",
-      },
+      params: { key: process.env.API_KEY as string, q: location, aqi: "no" },
     });
 
     const data = response.data;
@@ -38,15 +30,14 @@ const fetchWeatherData = async (location: string) => {
       timestamp: new Date(),
     };
   } catch (error: any) {
-    console.error(`Error fetching data for ${location}:`, error.message);
+    console.error(` Error fetching data for ${location}:`, error.message);
     return null;
   }
 };
 
-// Function to Insert Data into SQL Server
-const insertWeatherData = async (data: any) => {
+const insertWeatherData = async (data: WeatherData) => {
   try {
-    const pool = await sql.connect(dbConfig);
+    const pool = await connectDB();
     const query = `
       INSERT INTO WeatherData (location, country, temperature, humidity, condition, wind_speed, timestamp) 
       VALUES (@location, @country, @temperature, @humidity, @condition, @wind_speed, @timestamp)
@@ -64,14 +55,13 @@ const insertWeatherData = async (data: any) => {
       .query(query);
 
     console.log(`Inserted weather data for ${data.location}`);
-  } catch (error) {
+  } catch (error: any) {
     console.error("Database insert error:", error);
   }
 };
 
-// Process Locations
-const processLocations = async () => {
-  const locations = ["10001", "london"]; // US ZIP and UK Postcode
+export const processWeather = async () => {
+  const locations = ["10001", "london"];
   for (const location of locations) {
     const weatherData = await fetchWeatherData(location);
     if (weatherData) {
@@ -79,11 +69,3 @@ const processLocations = async () => {
     }
   }
 };
-
-// Run the Service
-const runService = async () => {
-  console.log("Weather Service Started...");
-  await processLocations();
-};
-
-runService();
