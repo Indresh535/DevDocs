@@ -1,9 +1,10 @@
 {
   "name": "weather-service",
   "version": "1.0.0",
-  "main": "app.js",
+  "main": "src/index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "npx ts-node src/index.ts",
+    "dev": "ts-node-dev --respawn src/index.ts"
   },
   "repository": {
     "type": "git",

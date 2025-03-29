@@ -1,3 +1,5 @@
+// # Fetch weather data and insert into DB
+
 import "dotenv/config";
 import axios from "axios";
 import sql from "mssql";
