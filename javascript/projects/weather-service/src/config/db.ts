@@ -24,3 +24,11 @@ export const connectDB = async () => {
     throw error;
   }
 };
+
+
+// API_URL=https://api.weatherapi.com/v1/current.json
+// API_KEY=796cc2653c1d4c7597d134220252903
+// DB_USER=sa
+// DB_PASSWORD=admin
+// DB_SERVER=DELL
+// DB_DATABASE=testdb
