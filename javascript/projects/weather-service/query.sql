@@ -3,7 +3,11 @@ ALTER LOGIN sa WITH PASSWORD = 'NewSecurePassword';-- Then, set a new password:
 ALTER LOGIN sa WITH CHECK_POLICY = OFF; -- Ensure sa login is active:
 
 
-select * from  WeatherData
+SELECT * FROM  WeatherData
+
+SELECT * FROM  StatusLog
+
+SELECT * FROM  ErrorLog
 
 SELECT @@SERVERNAME AS ServerName;
 
