@@ -114,3 +114,10 @@ CROSS JOIN dummy_rows_b;
 
 SELECT COUNT(*)
 FROM test_data;
+
+
+161_billion
+https://github.com/bbrumm/databasestar/tree/main/videos/161_billion
+
+ Load One BILLION Rows into an SQL Database
+https://github.com/gunnarmorling/1brc
