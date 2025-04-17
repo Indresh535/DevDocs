@@ -1,6 +1,5 @@
-Get-Content -Head 750000000 measurements.txt > measurements_750m.txt
-
-sh create_measurements.sh 500000000
+--Get-Content -Head 750000000 measurements.txt > measurements_750m.txt
+--sh create_measurements.sh 500000000
 
 /*
 SQL Server commands to import the file 
