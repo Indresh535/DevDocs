@@ -1,3 +1,4 @@
+/*
 MERGE statement in SQL is used to perform insert, update, and delete operations 
 on a target table based on the results of JOIN with a source table.
  This allows users to synchronize two tables by performing operations on one table 
@@ -6,3 +7,15 @@ on a target table based on the results of JOIN with a source table.
 The MERGE statement compares data between a source table and a target table based on specified key fields. 
 It performs appropriate actions like inserting new records, updating existing ones, 
 and deleting or flagging records no longer present in the source
+*/
+
+-- Example of a MERGE statement in SQL
+-- Syntax:
+MERGE INTO target_table
+USING source_table
+ON merge_condition
+WHEN MATCHED THEN
+   UPDATE SET column1 = value1 [, column2 = value2 …]
+WHEN NOT MATCHED THEN
+   INSERT (column1 [, column2 …])
+   VALUES (value1 [, value2 …]);
