@@ -3,12 +3,24 @@ import time
 import string
 import itertools
 import random
+import hashlib
+import json
 
 app = Flask(__name__)
 
 # Load a dictionary of common passwords
 with open('dictionary.txt', 'r') as f:
     common_passwords = [line.strip() for line in f.readlines()]
+
+# Load a simulated rainbow table
+try:
+    with open('rainbow_table.json', 'r') as f:
+        rainbow_table = json.load(f)
+except FileNotFoundError:
+    rainbow_table = {}
+
+def generate_hash(password):
+    return hashlib.sha256(password.encode()).hexdigest()
 
 @app.route('/')
 def index():
@@ -18,18 +30,24 @@ def index():
 def crack_password():
     password = request.form['password']
     attack_type = request.form['attack_type']
+    hashed = request.form.get('hashed', 'false') == 'true'
+
     attempts = 0
     found = False
     guess = ""
     start_time = time.time()
 
+    target = password
+    #if hashed:
+    target_hash = generate_hash(password)
+
     if attack_type == "brute_force":
         chars = string.ascii_lowercase + string.digits
-        for length in range(1, 5):  # Limit for demo
+        for length in range(1, 5):  
             for attempt in itertools.product(chars, repeat=length):
                 guess = ''.join(attempt)
                 attempts += 1
-                if guess == password:
+                if (guess == password and not hashed) or (generate_hash(guess) == target_hash and hashed):
                     found = True
                     break
             if found:
@@ -38,39 +56,45 @@ def crack_password():
     elif attack_type == "dictionary":
         for word in common_passwords:
             attempts += 1
-            if word == password:
+            if (word == password and not hashed) or (generate_hash(word) == target_hash and hashed):
                 guess = word
                 found = True
                 break
 
     elif attack_type == "smart_dictionary":
-        # Try simple mutations (like adding 123, replacing o with 0)
         mutations = []
         for word in common_passwords:
-            mutations.append(word)
-            mutations.append(word + "123")
-            mutations.append(word.replace('o', '0'))
-            mutations.append(word.replace('a', '@'))
-            mutations.append(word.capitalize())
-
+            mutations.extend([
+                word, word+"123", word.replace('o','0'), word.replace('a','@'), word.capitalize()
+            ])
         for word in mutations:
             attempts += 1
-            if word == password:
+            if (word == password and not hashed) or (generate_hash(word) == target_hash and hashed):
                 guess = word
                 found = True
                 break
 
     elif attack_type == "masked":
-        # Guess common patterns (e.g., letter + 2 numbers)
         for letter in string.ascii_lowercase:
             for num in range(100):
                 guess = f"{letter}{num:02d}"
                 attempts += 1
-                if guess == password:
+                if (guess == password and not hashed) or (generate_hash(guess) == target_hash and hashed):
                     found = True
                     break
             if found:
                 break
+
+    elif attack_type == "rainbow":
+        if hashed:
+            guess = rainbow_table.get(target_hash)
+            attempts = 1
+            found = guess is not None
+        else:
+            return jsonify({
+                'error': 'Rainbow table attack requires a hashed password!',
+                'success': False
+            })
 
     elapsed = time.time() - start_time
 
@@ -79,7 +103,8 @@ def crack_password():
             'password': guess,
             'attempts': attempts,
             'time': round(elapsed, 2),
-            'success': True
+            'success': True,
+            'hash': generate_hash(guess)
         })
     else:
         return jsonify({
