@@ -1,0 +1,31 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Password Cracker Simulator</title>
+</head>
+<body>
+  <h1>Password Cracking Simulator</h1>
+  <form id="crack-form">
+    <input type="text" name="password" placeholder="Enter password" required>
+    <button type="submit">Start Cracking</button>
+  </form>
+
+  <div id="result"></div>
+
+  <script>
+    document.getElementById('crack-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const response = await fetch('/crack', {
+        method: 'POST',
+        body: formData
+      });
+      const result = await response.json();
+      document.getElementById('result').innerText = 
+        `Cracked: ${result.password} in ${result.attempts} attempts and ${result.time} seconds`;
+    });
+  </script>
+</body>
+</html>
