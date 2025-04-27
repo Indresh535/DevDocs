@@ -1,4 +1,5 @@
 https://www.databasestar.com/vip/
+SQL Commands: A List with SQL Syntax: https://www.databasestar.com/sql-commands/
 SQL Views and Materialized Views: The Complete Guide - https://www.databasestar.com/sql-views/
 # SQL Learning Roadmap
 
