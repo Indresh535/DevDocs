@@ -17,6 +17,6 @@ FROM OPENJSON(@json) WITH (
     lastName NVARCHAR(50) '$.info.surname',
     age INT,
     dateOfBirth DATETIME2 '$.dob',
-    skills NVARCHAR(MAX) '$.info.skills' AS JSON
+    skills NVARCHAR(MAX) 
 )
 OUTER APPLY OPENJSON(skills) WITH (skill NVARCHAR(8) '$');
