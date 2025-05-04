@@ -1,4 +1,4 @@
-# stock_price_prediction
+# password_cracker
 
 requirement insallation python version 3.12.4
 
