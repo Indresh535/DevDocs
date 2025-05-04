@@ -104,7 +104,9 @@ def crack_password():
             'attempts': attempts,
             'time': round(elapsed, 2),
             'success': True,
-            'hash': generate_hash(guess)
+            'weak_password': True,
+            'hash': generate_hash(guess),
+            'message': 'Password successfully cracked! This is a weak password.'
         })
     else:
         return jsonify({
