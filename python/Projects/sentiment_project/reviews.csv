@@ -1,0 +1,5 @@
+text,sentiment
+"I love this!",positive
+"This is terrible",negative
+"Not bad at all",positive
+"Would not recommend",negative
