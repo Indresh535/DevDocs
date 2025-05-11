@@ -5,7 +5,7 @@ model = joblib.load('model.pkl')
 vectorizer = joblib.load('vectorizer.pkl')
 
 # Input
-text = ["I love this product!"]  # Example input
+text = ["I love this product!"] 
 X_input = vectorizer.transform(text)
 
 # Predict
