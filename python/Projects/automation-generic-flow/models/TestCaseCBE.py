@@ -1,0 +1,56 @@
+
+from sqlalchemy import create_engine, Column, Integer, String, DateTime, Numeric
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+from datetime import datetime
+
+Base = declarative_base()
+
+class TestCaseDetails(Base):
+    __tablename__ = 'TestCaseDetails'
+
+    SL_No = Column(Integer, nullable=True)
+    Module = Column(String(255), nullable=True)
+    Skin = Column(String(250), nullable=True)
+    Cruise_Line = Column(String(255), nullable=True)
+    Ship = Column(String(255), nullable=True)
+    Sailing_Date = Column(DateTime, nullable=True)
+    Remarks = Column(String(255), nullable=True)
+    Session_ID = Column(String(255), nullable=True)
+    Test_Cases = Column(String(255), nullable=True)
+    Testing_Comments = Column(String, nullable=True)
+    Load_CS_Result = Column(String(45), nullable=True)
+    Load_CS_TimeTaken = Column(Numeric(18, 2), nullable=True)
+    Cruise_Search_Result = Column(String(45), nullable=True)
+    Cruise_Search_TimeTaken = Column(Numeric(18, 2), nullable=True)
+    Cruise_Result = Column(String(45), nullable=True)
+    Cruise_Result_TimeTaken = Column(Numeric(18, 2), nullable=True)
+    Cruise_Details_Result = Column(String(45), nullable=True)
+    Cruise_Details_TimeTaken = Column(Numeric(18, 2), nullable=True)
+    Category_Avail_Result = Column(String(45), nullable=True)
+    Category_Avail_TimeTaken = Column(Numeric(18, 2), nullable=True)
+    Cabin_Selection_Result = Column(String(45), nullable=True)
+    Cabin_Selection_TimeTaken = Column(Numeric(18, 2), nullable=True)
+    Login_Result = Column(String(45), nullable=True)
+    Login_TimeTaken = Column(Numeric(18, 2), nullable=True)
+    Passenger_Details_Result = Column(String(45), nullable=True)
+    Passenger_Details_TimeTaken = Column(Numeric(18, 2), nullable=True)
+    Payment_Page_Result = Column(String(45), nullable=True)
+    Payment_Page_TimeTaken = Column(Numeric(18, 2), nullable=True)
+    Final_Results = Column(String(255), nullable=True)
+    Final_Results_TimeTaken = Column(Numeric(18, 2), nullable=True)
+    Tested_On = Column(DateTime, primary_key=True)
+    LastRefreshDatetime = Column(DateTime, default=datetime.utcnow, nullable=True)
+    Add_on_Packages_Page_Result = Column(String(45), nullable=True)
+    Add_on_Packages_Page_TimeTaken = Column(Numeric(18, 2), nullable=True)
+    Select_Agency_Result = Column(String(45), nullable=True)
+    Select_Agency_TimeTaken = Column(Numeric(18, 2), nullable=True)
+    Get_Fares_Result = Column(String(45), nullable=True)
+    Get_Fares_TimeTaken = Column(Numeric(18, 2), nullable=True)
+    Get_Category_Prices_Result = Column(String(45), nullable=True)
+    Get_Category_Prices_TimeTaken = Column(Numeric(18, 2), nullable=True)
+    RO_Category_Page_Result = Column(String(45), nullable=True)
+    RO_Category_Page_TimeTaken = Column(Numeric(18, 2), nullable=True)
+    Statement_Page_Result = Column(String(45), nullable=True)
+    Statement_Page_TimeTaken = Column(Numeric(18, 2), nullable=True)
+    Error_Img = Column(String, nullable=True)

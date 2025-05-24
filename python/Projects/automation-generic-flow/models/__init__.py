@@ -1,0 +1,1 @@
+# Page Object Model files for each page
