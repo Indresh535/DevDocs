@@ -6,8 +6,8 @@ import os
 #aws_secret_key = os.getenv("AWS_SECRET_KEY")
 
 
-aws_access_key = 'AKIAWVBXPP3ID4NT6CUP'
-aws_secret_key = 'yjMGJ6scevKg82eiZicDJw55ajhpBBOdQh7YC9i'
+# aws_access_key = 'AKIAWVBXPP3ID4NT6CUP'
+# aws_secret_key = 'yjMGJ6scevKg82eiZicDJw55ajhpBBOdQh7YC9i'
 password = urllib.parse.quote_plus('hh')
 # connection_string = f'mssql+pyodbc://gfuser:{password}@stagedb/CustomerProfile_CC?driver=ODBC+Driver+17+for+SQL+Server'
 # Connection string for SQLAlchemy
