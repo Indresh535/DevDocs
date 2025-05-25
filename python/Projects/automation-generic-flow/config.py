@@ -2,8 +2,8 @@
 import urllib
 import os
 
-#aws_access_key = os.getenv("AWS_ACCESS_KEY")
-#aws_secret_key = os.getenv("AWS_SECRET_KEY")
+aws_access_key = os.getenv("AWS_ACCESS_KEY")
+aws_secret_key = os.getenv("AWS_SECRET_KEY")
 
 
 # aws_access_key = 'AKIAWVBXPP3ID4NT6CUP'
