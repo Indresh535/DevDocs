@@ -4,6 +4,11 @@ This project translates English text files into multiple languages and organizes
 
 ## Folder Structure
 
+requiernt insalion python version 3.12.4
+
+python -m venv venv
+
+venv/Scripts/activate
 
 ## Setup
 
