@@ -3,7 +3,7 @@
 This project translates English text files into multiple languages and organizes the output into respective folders.
 
 ## Folder Structure
-   ```bash
+
 requiernt insalion python version 3.12.4
 
 python -m venv venv
