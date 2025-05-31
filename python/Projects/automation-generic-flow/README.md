@@ -18,6 +18,6 @@ venv/Scripts/activate
 
 ## RUN
 
-2. Run the file Language Project:
+2. Run the file
    ```bash
    pytest tests/test_cbe_workflow.py --capture=no     
