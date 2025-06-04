@@ -21,3 +21,11 @@ venv/Scripts/activate
 2. Run the file Language Project:
    ```bash
    pytest tests/test_cbe_workflow.py --capture=no     
+
+
+
+
+
+Test Locally 
+docker build -t your-python-app .
+docker run -p 5000:5000 your-python-app
