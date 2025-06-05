@@ -1,0 +1,37 @@
+.github/workflows/deploy.yml:
+
+name: Deploy to Windows Server
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy Node.js and Next.js App
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy to Windows Server via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd ${{ secrets.DEPLOY_DIR }}
+            git pull origin main
+
+            cd api
+            npm install
+            pm2 start index.js --name api || pm2 restart api
+
+            cd ../web
+            npm install
+            npm run build
+            pm2 start npm --name web -- start || pm2 restart web
