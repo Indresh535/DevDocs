@@ -1,5 +1,5 @@
 # C:\scripts\deploy.ps1
-cd C:\www\automation-generic-flow
+cd C:\www\automation-generic-flow-api
 git pull origin main
 
 cd api
