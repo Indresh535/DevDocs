@@ -15,7 +15,6 @@ This repository provides a complete PySpark setup to process large-scale data us
 ### 🔗 Prerequisites
 
 - Python 3.7+
-- Java 8 or 11
 - Apache Spark 3.x
 - Hadoop (optional for HDFS support)
 
