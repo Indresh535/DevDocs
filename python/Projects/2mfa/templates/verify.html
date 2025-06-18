@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+{% if qr_image %}
+<p class="text-center">Scan this QR code with Google Authenticator:</p>
+<div class="text-center mb-4">
+  <img src="data:image/png;base64,{{ qr_image }}" class="img-fluid" alt="QR Code">
+</div>
+{% endif %}
+<form method="post">
+  <div class="mb-3">
+    <label class="form-label">Enter 6-digit code</label>
+    <input name="code" class="form-control" required>
+  </div>
+  <button type="submit" class="btn btn-warning w-100">Verify</button>
+</form>
+{% endblock %}
+{% set title = "Two-Factor Verification" %}
