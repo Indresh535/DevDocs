@@ -1,7 +1,7 @@
 
 # Create your views here.
 from django.shortcuts import render, redirect
-from .models import Note
+from .models import Notes
 from .forms import NoteForm, QuestionForm
 from sentence_transformers import SentenceTransformer
 import numpy as np
@@ -13,7 +13,7 @@ index = faiss.IndexFlatL2(384)
 note_map = {}
 
 def home(request):
-    notes = Note.objects.all().order_by('-created_at')
+    notes = Notes.objects.all().order_by('-created_at')
     return render(request, 'home.html', {'notes': notes})
 
 def add_note(request):
