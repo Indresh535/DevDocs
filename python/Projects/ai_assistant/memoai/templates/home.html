@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Notes</title>
+</head>
+<body>
+    <h1>My Notes</h1>
+    <a href="{% url 'add_note' %}">Add Note</a> | <a href="{% url 'ask_question' %}">Ask AI</a>
+    <ul>
+        {% for note in notes %}
+            <li><strong>{{ note.title }}</strong>: {{ note.content|truncatewords:20 }}</li>
+        {% empty %}
+            <li>No notes yet.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
