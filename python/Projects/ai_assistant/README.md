@@ -16,8 +16,10 @@ python manage.py startapp ai_assistant
 
 Apply Migrations and Start Server
 
+after Creating /models.py run this
 python manage.py makemigrations
 python manage.py migrate
+
 python manage.py runserver
 
 deactivate 
