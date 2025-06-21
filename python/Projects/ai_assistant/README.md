@@ -12,6 +12,12 @@ venv\Scripts\activate
 
 pip install -r requirements.txt
 
-python app.py
+python manage.py startapp ai_assistant
+
+Apply Migrations and Start Server
+
+python manage.py makemigrations
+python manage.py migrate
+python manage.py runserver
 
 deactivate 
