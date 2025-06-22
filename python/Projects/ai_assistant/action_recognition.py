@@ -20,7 +20,7 @@ def extract_keypoints(results):
     return keypoints if keypoints else [0]*99  # 33 landmarks * 3 = 99
 
 # Video input
-cap = cv2.VideoCapture("walk.mp4")
+cap = cv2.VideoCapture("dance.mp4")
 
 while cap.isOpened():
     ret, frame = cap.read()
