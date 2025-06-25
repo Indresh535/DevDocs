@@ -8,8 +8,6 @@ This project recognizes simple human actions — **walking**, **running**, **jum
 
 - Pose landmark extraction using **MediaPipe**
 - Real-time or video-based action classification
-- Predefined actions: `walk`, `run`, `jump`, `dance`
-- Easily extendable with your own videos and labels
 
 ---
 
