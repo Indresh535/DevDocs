@@ -32,8 +32,8 @@ jobs:
 
       - name: Run model training (optional)
         run: |
-          python train.py
+          python train_model.py
 
       - name: Run action prediction test (optional)
         run: |
-          python predict.py
+          python action_recognition.py
