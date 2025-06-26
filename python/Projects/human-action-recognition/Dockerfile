@@ -18,4 +18,4 @@ COPY . /app
 RUN pip install --no-cache-dir opencv-python mediapipe scikit-learn numpy joblib
 
 # Default command (can be overridden)
-CMD ["python", "predict.py"]
+CMD ["python", "action_recognition.py"]
