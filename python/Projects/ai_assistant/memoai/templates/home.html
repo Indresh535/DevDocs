@@ -2,8 +2,15 @@
 <html>
 <head>
     <title>My Notes</title>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
+    <form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Submit</button>
+</form>
+
     <h1>My Notes</h1>
     <a href="{% url 'add_note' %}">Add Note</a> | <a href="{% url 'ask_question' %}">Ask AI</a>
     <ul>

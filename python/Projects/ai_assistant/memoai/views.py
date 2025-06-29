@@ -1,7 +1,7 @@
 
 # Create your views here.
 from django.shortcuts import render, redirect
-from .models import Notes
+from .models import MyForm, Notes
 from .forms import NoteForm, QuestionForm
 from sentence_transformers import SentenceTransformer
 import numpy as np
@@ -46,3 +46,14 @@ def ask_question(request):
         form = QuestionForm()
     return render(request, 'ask_question.html', {'form': form, 'answer': answer})
 
+
+
+def my_view(request):
+    if request.method == 'POST':
+        form = MyForm(request.POST)
+        if form.is_valid():
+            # Process form
+            return HttpResponse('Success')
+    else:
+        form = MyForm()
+    return render(request, 'my_template.html', {'form': form})
