@@ -6,19 +6,22 @@
 </head>
 <body>
     <form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Submit</button>
-
-    <h1>My Notes</h1>
-    <a href="{% url 'add_note' %}">Add Note</a> | <a href="{% url 'ask_question' %}">Ask AI</a>
-    <ul>
-        {% for note in notes %}
-            <li><strong>{{ note.title }}</strong>: {{ note.content|truncatewords:20 }}</li>
-        {% empty %}
-            <li>No notes yet.</li>
-        {% endfor %}
-    </ul>
+        <div>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Submit</button>
+        </div>
+        <div>
+            <h1>My Notes</h1>
+            <a href="{% url 'add_note' %}">Add Note</a> | <a href="{% url 'ask_question' %}">Ask AI</a>
+            <ul>
+                {% for note in notes %}
+                    <li><strong>{{ note.title }}</strong>: {{ note.content|truncatewords:20 }}</li>
+                {% empty %}
+                    <li>No notes yet.</li>
+                {% endfor %}
+            </ul>
+        </div>
 </form>
 </body>
 </html>
