@@ -19,3 +19,16 @@ Install dependencies with pip:
 
 ```bash
 pip install opencv-python mediapipe scikit-learn numpy joblib
+
+
+requiernt insalion python version 3.12.4
+
+python -m venv venv
+
+venv/Scripts/activate     
+
+pip install -r requirements.txt
+
+streamlit run app.py
+
+deactivate 
