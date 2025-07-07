@@ -2,10 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Action Recognition</title>
 </head>
 <body>
-    
+    <h1>Upload a Video for Action Recognition</h1>
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="video" accept="video/*" required><br><br>
+        <button type="submit">Upload & Recognize</button>
+    </form>
+
+    {% if prediction %}
+        <h2>Predicted Action: {{ prediction }}</h2>
+        <video width="640" height="480" controls>
+            <source src="{{ url_for('static', filename='output.mp4') }}" type="video/mp4">
+        </video>
+    {% endif %}
 </body>
 </html>
