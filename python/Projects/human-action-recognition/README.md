@@ -18,9 +18,6 @@ This project recognizes simple human actions — **walking**, **running**, **jum
 Install dependencies with pip:
 
 ```bash
-pip install opencv-python mediapipe scikit-learn numpy joblib
-
-
 requiernt insalion python version 3.12.4
 
 python -m venv venv
