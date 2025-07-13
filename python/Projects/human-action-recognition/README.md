@@ -28,6 +28,6 @@ pip install flask opencv-python mediapipe scikit-learn joblib numpy
 
 pip install -r requirements.txt
 
-streamlit run app.py
+python app.py
 
 deactivate 
