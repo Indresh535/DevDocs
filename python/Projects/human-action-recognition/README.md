@@ -18,7 +18,7 @@ This project recognizes simple human actions — **walking**, **running**, **jum
 Install dependencies with pip:
 
 ```bash
-requierements insallation python version 3.12.4
+requirements insallation python version 3.12.4
 
 python -m venv venv
 
