@@ -3,3 +3,6 @@ openai==1.93.0
 sentence-transformers==5.0.0
 chromadb==1.0.13
 django-recaptcha==4.1.0
+faiss-cpu
+llama-cpp-python
+numpy
