@@ -53,6 +53,21 @@
                 Your browser does not support the video tag.
             </video>
         {% endif %}
+<!-- 
+             {% if prediction_knn and prediction_svm %}
+    <hr>
+    <h4 class="text-center text-secondary mt-4">Predictions:</h4>
+    <ul class="list-group text-center">
+        <li class="list-group-item">🔍 KNN Predicted: <strong class="text-success">{{ prediction_knn }}</strong></li>
+        <li class="list-group-item">🔍 SVM Predicted: <strong class="text-primary">{{ prediction_svm }}</strong></li>
+        <li class="list-group-item">📊 Comparison:  <strong class="{{ 'text-success' if comparison_result == 'Match ✅' else 'text-danger' }}">{{ comparison_result }}</strong></li>
+    </ul>
+        <video class="w-100 mt-4" controls>
+            <source src="{{ url_for('static', filename='output.mp4') }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    {% endif %} -->
+
     </div>
 </div>
 
