@@ -3,9 +3,11 @@ import cv2
 import joblib
 import numpy as np
 from flask import Flask, render_template, request
-from utils import extract_keypoints
 from train_model import train_model
+from action_recognition import process_video
 import mediapipe as mp
+import psutil
+
 
 app = Flask(__name__)
 UPLOAD_FOLDER = "static"
@@ -13,10 +15,13 @@ app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    prediction = None
+    prediction_knn = None
+    prediction_svm = None
+    comparison_result = None
+    metrics = None
 
-    # Train model on every run (or cache this for real apps)
-    train_model()
+    # Train models
+    train_metrics = train_model()
 
     if request.method == "POST":
         file = request.files["video"]
@@ -25,50 +30,36 @@ def index():
             output_path = os.path.join(app.config["UPLOAD_FOLDER"], "output.mp4")
             file.save(video_path)
 
-            # Load model
-            model, le = joblib.load("action_model.pkl")
+            # Process video with both models
+            results = process_video(video_path, output_path)
 
-            # Setup MediaPipe
-            mp_pose = mp.solutions.pose
-            pose = mp_pose.Pose()
-            drawing = mp.solutions.drawing_utils
+            prediction_knn = results['prediction_knn']
+            prediction_svm = results['prediction_svm']
+            comparison_result = "Match ✅" if prediction_knn == prediction_svm else "Mismatch ❌"
 
-            cap = cv2.VideoCapture(video_path)
-            width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-            height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-            fps = cap.get(cv2.CAP_PROP_FPS)
+            # Combine training and prediction metrics
+            metrics = {
+                'knn': {
+                    'accuracy': train_metrics['knn']['accuracy'],
+                    'training_time': train_metrics['knn']['training_time'],
+                    'prediction_time': results['knn_prediction_time'],
+                    'cpu_usage': train_metrics['knn']['cpu_usage']
+                },
+                'svm': {
+                    'accuracy': train_metrics['svm']['accuracy'],
+                    'training_time': train_metrics['svm']['training_time'],
+                    'prediction_time': results['svm_prediction_time'],
+                    'cpu_usage': train_metrics['svm']['cpu_usage']
+                }
+            }
 
-            out = cv2.VideoWriter(output_path, cv2.VideoWriter_fourcc(*'mp4v'), fps, (width, height))
-            predictions = []
-
-            while cap.isOpened():
-                ret, frame = cap.read()
-                if not ret:
-                    break
-
-                image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-                results = pose.process(image)
-                keypoints = extract_keypoints(results)
-                X = np.array(keypoints).reshape(1, -1)
-                action = le.inverse_transform(model.predict(X))[0]
-                predictions.append(action)
-
-                # Annotate
-                cv2.putText(frame, f"Action: {action}", (20, 40),
-                            cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
-                drawing.draw_landmarks(frame, results.pose_landmarks, mp_pose.POSE_CONNECTIONS)
-                out.write(frame)
-
-            cap.release()
-            out.release()
-
-            prediction = max(set(predictions), key=predictions.count)
-
-    return render_template("index.html", prediction=prediction)
+    return render_template("index.html", prediction_knn=prediction_knn,
+                           prediction_svm=prediction_svm,
+                           comparison_result=comparison_result,
+                           metrics=metrics)
 
 if __name__ == "__main__":
     app.run(debug=True)
-
 
 
 
