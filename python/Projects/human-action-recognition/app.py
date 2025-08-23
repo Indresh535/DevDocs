@@ -2,16 +2,22 @@ import os
 import cv2
 import joblib
 import numpy as np
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, send_from_directory
 from utils import extract_keypoints
 from train_model import train_model
 from action_recognition import process_video
 import mediapipe as mp
 import psutil
+import time
 
 app = Flask(__name__)
 UPLOAD_FOLDER = "static"
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+
+
+@app.route('/static/<path:filename>')
+def static_files(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename, mimetype='video/mp4')
 
 @app.route("/", methods=["GET"])
 def home():
@@ -60,7 +66,8 @@ def recognize():
     return render_template("predict.html", prediction_knn=prediction_knn,
                            prediction_svm=prediction_svm,
                            comparison_result=comparison_result,
-                           metrics=metrics)
+                           metrics=metrics,
+                           time=int(time.time()))
 
 if __name__ == "__main__":
     app.run(debug=True)

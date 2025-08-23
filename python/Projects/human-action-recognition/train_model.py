@@ -6,12 +6,34 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.svm import SVC
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
-from utils import extract_keypoints
 import mediapipe as mp
 import time
 import psutil
+import json
+from utils import extract_keypoints
 
-def train_model(data_dir='data/train', actions=["walk", "run", "jump", "dance"]):
+
+def load_metrics_from_file():
+    """Load previously saved model metrics if available."""
+    if os.path.exists("model_metrics.json"):
+        with open("model_metrics.json", "r") as f:
+            return json.load(f)
+    else:
+        print("Metrics file not found. Please delete model files to retrain.")
+        return None
+
+
+def train_model(data_dir='data/train', actions=["walk", "run", "jump", "dance"], force_retrain=False):
+    """Train KNN and SVM models on the given dataset, or load if already trained."""
+    
+    # Skip training if models already exist and retraining is not forced
+    if not force_retrain and os.path.exists("model_knn.pkl") and os.path.exists("model_svm.pkl"):
+        print("Models already trained. Skipping training.")
+        metrics = load_metrics_from_file()
+        if metrics is None:
+            raise ValueError("Model files exist but metrics are missing. Please delete model files to retrain.")
+        return metrics
+
     mp_pose = mp.solutions.pose
     pose = mp_pose.Pose()
 
@@ -19,18 +41,21 @@ def train_model(data_dir='data/train', actions=["walk", "run", "jump", "dance"])
     for action in actions:
         video_path = os.path.join(data_dir, f"{action}.mp4")
         if not os.path.exists(video_path):
-            print(f"Video {video_path} not found.")
+            print(f"Video {video_path} not found. Skipping.")
             continue
+
         cap = cv2.VideoCapture(video_path)
         while cap.isOpened():
             ret, frame = cap.read()
             if not ret:
                 break
+
             image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             results = pose.process(image)
             keypoints = extract_keypoints(results)
             X.append(keypoints)
             y.append(action)
+
         cap.release()
 
     if not X:
@@ -49,7 +74,8 @@ def train_model(data_dir='data/train', actions=["walk", "run", "jump", "dance"])
     knn_model.fit(X_train, y_train)
     knn_training_time = time.time() - start_time
     knn_accuracy = knn_model.score(X_val, y_val) * 100
-    knn_cpu_usage = psutil.cpu_percent(interval=1)
+    proc = psutil.Process(os.getpid())
+    knn_cpu_usage = proc.cpu_percent(interval=1)
 
     # Train SVM
     start_time = time.time()
@@ -57,59 +83,29 @@ def train_model(data_dir='data/train', actions=["walk", "run", "jump", "dance"])
     svm_model.fit(X_train, y_train)
     svm_training_time = time.time() - start_time
     svm_accuracy = svm_model.score(X_val, y_val) * 100
-    svm_cpu_usage = psutil.cpu_percent(interval=1)
+    proc = psutil.Process(os.getpid())
+    svm_cpu_usage = proc.cpu_percent(interval=1)
 
     # Save models and label encoder
     joblib.dump((knn_model, le), "model_knn.pkl")
     joblib.dump((svm_model, le), "model_svm.pkl")
 
+    # Save metrics
     metrics = {
-        'knn': {'accuracy': round(knn_accuracy, 2), 'training_time': round(knn_training_time, 2), 'cpu_usage': knn_cpu_usage},
-        'svm': {'accuracy': round(svm_accuracy, 2), 'training_time': round(svm_training_time, 2), 'cpu_usage': svm_cpu_usage}
+        'knn': {
+            'accuracy': round(knn_accuracy, 2),
+            'training_time': round(knn_training_time, 2),
+            'cpu_usage': knn_cpu_usage
+        },
+        'svm': {
+            'accuracy': round(svm_accuracy, 2),
+            'training_time': round(svm_training_time, 2),
+            'cpu_usage': svm_cpu_usage
+        }
     }
 
+    with open("model_metrics.json", "w") as f:
+        json.dump(metrics, f)
+
+    print("Training complete. Models and metrics saved.")
     return metrics
-
-# import cv2
-# import mediapipe as mp
-# import numpy as np
-# import os
-# from sklearn.neighbors import KNeighborsClassifier
-# import joblib
-
-# # Setup
-# mp_pose = mp.solutions.pose
-# pose = mp_pose.Pose()
-# DATA_DIR = "data"
-
-# actions = ["walk", "run", "jump", "dance"]
-# X = []
-# y = []
-
-# def extract_keypoints(results):
-#     keypoints = []
-#     if results.pose_landmarks:
-#         for lm in results.pose_landmarks.landmark:
-#             keypoints.extend([lm.x, lm.y, lm.z])
-#     return keypoints if keypoints else [0]*99
-
-# # Loop over each action's video
-# for action in actions:
-#     cap = cv2.VideoCapture(f"{action}.mp4")
-#     while cap.isOpened():
-#         ret, frame = cap.read()
-#         if not ret:
-#             break
-#         image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-#         results = pose.process(image)
-#         keypoints = extract_keypoints(results)
-#         X.append(keypoints)
-#         y.append(action)
-#     cap.release()
-
-# # Train model
-# print("Training model...")
-# model = KNeighborsClassifier(n_neighbors=3)
-# model.fit(X, y)
-# joblib.dump(model, "action_model.pkl")
-# print("Model saved as action_model.pkl")

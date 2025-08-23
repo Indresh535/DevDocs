@@ -1,0 +1,1 @@
+{"knn": {"accuracy": 94.92, "training_time": 0.01, "cpu_usage": 10.9}, "svm": {"accuracy": 98.31, "training_time": 0.07, "cpu_usage": 1.6}}
